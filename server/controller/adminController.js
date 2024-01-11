@@ -11,7 +11,7 @@ const BannerModel = require("../models/bannerModel")
 // payed member all data Model
 const subscriptionPayedModel = require("../models/subscriptionPayedDeveloper")
 
-// for image
+// for img
 const cloudinary = require("cloudinary").v2;
 // from cloudinary take api_key
 // import {v2 as cloudinary} from 'cloudinary';
@@ -85,7 +85,7 @@ const userDetails = async (req, res) => {
   }
   catch (error) {
 
-    console.log(error, "to get user details")
+    console.log(error, "to get user detail")
     res.status(500).send({ message: "error in takeking user data", success: false, error })
   }
 }
