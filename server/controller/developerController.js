@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 // razo
 const Razorpay = require("razorpay");
 var instance = new Razorpay({
-    key_id: process.env.keyid,
-    key_secret: process.env.keysecret,
+    key_id: process.env.KEY_ID,
+    key_secret: process.env.KEY_SECRET,
 });
 // developer model
 const Developer = require("../models/developerModel")
@@ -28,9 +28,9 @@ const cloudinary = require("cloudinary").v2;
 // import {v2 as cloudinary} from 'cloudinary';
 
 cloudinary.config({
-    cloud_name: process.env.cloudinaryname,
-    api_key: process.env.cloudinaryapikey,
-    api_secret: process.env.cloudinaryapisecret,
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_APIKEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
 });
 
@@ -53,8 +53,8 @@ const sendVerifyMail = async (name, email, otp) => {
             },
             requireTLS: true,
             auth: {
-                user: process.env.email,
-                pass: process.env.password
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
 
             },
 
@@ -84,8 +84,9 @@ const sendVerifyMail = async (name, email, otp) => {
 
 }
 
-// registeration of developer
+// // registeration of developer
 const developerRegister = async (req, res) => {
+    
     try {
 
         const developerExists = await Developer.findOne({ email: req.body.email })
@@ -138,7 +139,7 @@ const developerRegister = async (req, res) => {
 }
 
 
-// to vefify otp after registering
+// // to vefify otp after registering
 const verifyOtp = async (req, res) => {
     try {
 
@@ -163,6 +164,7 @@ const verifyOtp = async (req, res) => {
 // login
 
 const verifyLogin = async (req, res) => {
+   
     try {
         const developer = await Developer.findOne({ email: req.body.email })
 
@@ -172,6 +174,7 @@ const verifyLogin = async (req, res) => {
 
 
         if (developer) {
+         
             if (developer.isVerfied != true) {
 
                 await Developer.findOneAndDelete({ email: req.body.email })
@@ -202,7 +205,7 @@ const verifyLogin = async (req, res) => {
                 }
 
                 else {
-                    const developertoken = jwt.sign({ id: developer._id,role:"DEVELOPER" }, process.env.jwtsecrt, { expiresIn: "1d" })
+                    const developertoken = jwt.sign({ id: developer._id,role:"DEVELOPER" }, process.env.JWT_SECRET, { expiresIn: "1d" })
                     res.status(200).send({ message: "Login successful", success: true, data: developertoken })
 
                 }
@@ -350,6 +353,8 @@ const developerResetPassword = async (req, res) => {
 
 // to desplay name at header 
 const homeDisplayName = async (req, res) => {
+
+    console.log(req.body,"what")
     try {
         const devId = req.body.developerId
 
@@ -374,6 +379,7 @@ const homeDisplayName = async (req, res) => {
 }
 // collecting all details of developer
 const developerAllData = async (req, res) => {
+    
     try {
         const Data = await developerDetails.findOne({ userId: req.body.developerId })
         if (!Data) {
@@ -703,7 +709,7 @@ const verifyPayments = async (req, res) => {
         const details = (req.body)
 
         const crypto = require("crypto");
-        let hmac = crypto.createHmac("sha256", process.env.keysecret)
+        let hmac = crypto.createHmac("sha256", process.env.KEY_SECRET)
         hmac.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
         hmac = hmac.digest('hex')
         const advance = details.order.amount / 100

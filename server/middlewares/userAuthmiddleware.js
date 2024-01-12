@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 module.exports = async (req, res, next) => {
     try {
         const token = req.headers['authorization'].split(" ")[1]
-        jwt.verify(token, process.env.jwtsecret, (err, decode) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
             if (err || decode.role!=='USER') {
                 return res.status(401).send({
                     message: "Auth failed",

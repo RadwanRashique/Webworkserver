@@ -11,15 +11,15 @@ const BannerModel = require("../models/bannerModel")
 // payed member all data Model
 const subscriptionPayedModel = require("../models/subscriptionPayedDeveloper")
 
-// for img
+// for image
 const cloudinary = require("cloudinary").v2;
 // from cloudinary take api_key
 // import {v2 as cloudinary} from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: process.env.cloudinaryname,
-  api_key: process.env.cloudinaryapikey,
-  api_secret: process.env.cloudinaryapisecret,
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_APIKEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
 });
 
@@ -49,7 +49,7 @@ const adminLogin = async (req, res) => {
             .send({ message: "please check your password", success: false });
         } else {
          
-          const admintoken = jwt.sign({ id: user._id ,role:"Admin"}, process.env.jwtsecret, {
+          const admintoken = jwt.sign({ id: user._id ,role:"Admin"}, process.env.JWT_SECRET, {
             expiresIn: "1d",
           });
 
@@ -85,7 +85,7 @@ const userDetails = async (req, res) => {
   }
   catch (error) {
 
-    console.log(error, "to get user detail")
+    console.log(error, "to get user details")
     res.status(500).send({ message: "error in takeking user data", success: false, error })
   }
 }

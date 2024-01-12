@@ -23,9 +23,9 @@ const cloudinary = require("cloudinary").v2;
 // import {v2 as cloudinary} from 'cloudinary';
 
 cloudinary.config({
-    cloud_name: process.env.cloudinaryname,
-    api_key: process.env.cloudinaryapikey,
-    api_secret: process.env.cloudinaryapisecret,
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_APIKEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
 });
 const developerDetailsModel = require('../models/developerDetailsModel')
@@ -52,8 +52,8 @@ const sendVerifyMail = async (name, email, otp) => {
             },
             requireTLS: true,
             auth: {
-                user: process.env.email,
-                pass: process.env.password
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
 
             },
 

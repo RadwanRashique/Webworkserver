@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 
         const admintoken = req.headers['authorization'].split(" ")[1]
 
-        jwt.verify(admintoken, process.env.jwtsecret, (err, decode) => {
+        jwt.verify(admintoken, process.env.JWT_SECRET, (err, decode) => {
             if (err || decode.role!=="Admin") {
                 console.log(err);
                 return res.status(401).send({

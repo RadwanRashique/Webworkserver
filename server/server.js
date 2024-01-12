@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const cors = require("cors");
 app.use(cors({
-  origin: "https://webwork-sigma.vercel.app/",
+  origin: "*",
 }));
 // to use (.env file access)
 require('dotenv').config()
