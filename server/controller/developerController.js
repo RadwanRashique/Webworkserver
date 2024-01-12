@@ -354,7 +354,7 @@ const developerResetPassword = async (req, res) => {
 // to desplay name at header 
 const homeDisplayName = async (req, res) => {
 
-    console.log(req.body,"what")
+   
     try {
         const devId = req.body.developerId
 
