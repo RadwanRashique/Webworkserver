@@ -26,7 +26,9 @@ app.use("/api/developer", developerRoute)
 //  developer
 const adminRoute = require('./routes/adminRoute')
 app.use("/api/admin", adminRoute)
-const port = process.env.port || 5000;
+
+
+const port = process.env.PORT || 5000;
 const server = http.listen(port, () => {
   console.log("server running");
 })
